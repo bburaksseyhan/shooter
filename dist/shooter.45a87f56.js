@@ -160,9 +160,9 @@
       });
     }
   }
-})({"j7Itq":[function(require,module,exports,__globalThis) {
+})({"9vUyi":[function(require,module,exports,__globalThis) {
 var global = arguments[3];
-var HMR_HOST = null;
+var HMR_HOST = "localhost";
 var HMR_PORT = null;
 var HMR_SERVER_PORT = 1234;
 var HMR_SECURE = false;
@@ -29274,6 +29274,6 @@ class SplashScreen {
     }
 }
 
-},{"pixi.js":"8JifE","../config/gameConfig.js":"7G9Tq","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["j7Itq","9VLDe"], "9VLDe", "parcelRequire54e7", {})
+},{"pixi.js":"8JifE","../config/gameConfig.js":"7G9Tq","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["9vUyi","9VLDe"], "9VLDe", "parcelRequire54e7", {})
 
 //# sourceMappingURL=shooter.45a87f56.js.map

@@ -2,8 +2,9 @@
   "name": "space-shooter",
   "version": "1.0.0",
   "description": "A space shooter game built with PixiJS",
+  "type": "module",
   "scripts": {
-    "start": "parcel index.html",
+    "start": "parcel index.html --host localhost",
     "build": "parcel build index.html"
   },
   "dependencies": {
