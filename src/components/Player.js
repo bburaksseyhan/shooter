@@ -1,16 +1,19 @@
-import * as PIXI from 'pixi.js';
 import { GAME_CONFIG } from '../config/gameConfig.js';
 
 export class Player {
     constructor(app) {
         this.app = app;
-        this.player = this.createPlayer();
+        this.sprite = this.createPlayer();
         this.x = GAME_CONFIG.GAME_WIDTH / 2;
         this.y = GAME_CONFIG.GAME_HEIGHT - 50;
         this.speed = GAME_CONFIG.PLAYER_SPEED;
         this.bullets = [];
-        this.lastShotTime = 0;
+        this.lastShot = 0;
         this.shootCooldown = 250; // 250ms cooldown between shots
+        
+        // Initialize sounds
+        this.shotSound = new Audio('./src/assets/sounds/shot.mp3');
+        this.laserSound = new Audio('./src/assets/sounds/laser.mp3');
     }
     
     createPlayer() {
@@ -71,11 +74,11 @@ export class Player {
     }
     
     addToStage() {
-        this.app.stage.addChild(this.player);
+        this.app.stage.addChild(this.sprite);
     }
     
     removeFromStage() {
-        this.app.stage.removeChild(this.player);
+        this.app.stage.removeChild(this.sprite);
     }
     
     update(inputHandler) {
@@ -88,14 +91,14 @@ export class Player {
         }
         
         // Update sprite position
-        this.player.x = this.x;
-        this.player.y = this.y;
+        this.sprite.x = this.x;
+        this.sprite.y = this.y;
     }
     
     shoot() {
         // Check if enough time has passed since the last shot
         const currentTime = Date.now();
-        if (currentTime - this.lastShotTime < this.shootCooldown) {
+        if (currentTime - this.lastShot < this.shootCooldown) {
             return null;
         }
         
@@ -106,15 +109,15 @@ export class Player {
         bullet.endFill();
         
         // Position bullet at player's position
-        bullet.x = this.player.x;
-        bullet.y = this.player.y - 20;
+        bullet.x = this.sprite.x;
+        bullet.y = this.sprite.y - 20;
         
         // Add bullet to stage and store in array
         this.app.stage.addChild(bullet);
         this.bullets.push(bullet);
         
         // Update last shot time
-        this.lastShotTime = currentTime;
+        this.lastShot = currentTime;
         
         return bullet;
     }

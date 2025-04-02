@@ -1,4 +1,3 @@
-import * as PIXI from 'pixi.js';
 import { GAME_CONFIG } from '../config/gameConfig.js';
 
 export class LevelManager {

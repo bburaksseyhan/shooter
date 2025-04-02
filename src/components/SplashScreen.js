@@ -1,14 +1,14 @@
-import * as PIXI from 'pixi.js';
 import { GAME_CONFIG } from '../config/gameConfig.js';
 
 export class SplashScreen {
-    constructor(app, onStart) {
+    constructor(app, onComplete) {
         this.app = app;
-        this.onStart = onStart;
+        this.onComplete = onComplete;
         this.container = this.createSplashScreen();
         this.isVisible = true;
         this.addToStage();
         this.setupKeyListener();
+        this.playJingle();
     }
     
     createSplashScreen() {
@@ -110,7 +110,7 @@ export class SplashScreen {
         const keyHandler = (e) => {
             if (e.key === 'Enter' && this.isVisible) {
                 this.hide();
-                this.onStart();
+                this.onComplete();
                 document.removeEventListener('keydown', keyHandler);
             }
         };
@@ -126,5 +126,9 @@ export class SplashScreen {
     show() {
         this.isVisible = true;
         this.app.stage.addChild(this.container);
+    }
+    
+    playJingle() {
+        // Implementation of playJingle method
     }
 } 

@@ -4,13 +4,7 @@
   "description": "A space shooter game built with PixiJS",
   "type": "module",
   "scripts": {
-    "start": "parcel index.html --host localhost",
-    "build": "parcel build index.html"
-  },
-  "dependencies": {
-    "pixi.js": "^7.4.0"
-  },
-  "devDependencies": {
-    "parcel": "^2.11.0"
+    "start": "python3 -m http.server 8000",
+    "dev": "python3 -m http.server 8000"
   }
-} 
+}

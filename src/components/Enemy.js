@@ -1,4 +1,3 @@
-import * as PIXI from 'pixi.js';
 import { GAME_CONFIG } from '../config/gameConfig.js';
 
 export class Enemy {
@@ -8,7 +7,7 @@ export class Enemy {
         this.enemies = [];
         this.enemyTypes = GAME_CONFIG.ENEMY_TYPES;
         this.lastSpawnTime = 0;
-        this.spawnCooldown = this.levelManager.getSpawnCooldown();
+        this.spawnCooldown = 1000; // 1 second between spawns
     }
     
     createEnemy(type, speedMultiplier) {

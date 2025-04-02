@@ -1,4 +1,3 @@
-import * as PIXI from 'pixi.js';
 import { GAME_CONFIG } from './config/gameConfig.js';
 import { InputHandler } from './utils/inputHandler.js';
 import { Player } from './components/Player.js';
@@ -10,6 +9,13 @@ import { SplashScreen } from './components/SplashScreen.js';
 
 class Game {
     constructor() {
+        // Wait for DOM to be ready
+        window.addEventListener('load', () => {
+            this.init();
+        });
+    }
+
+    init() {
         this.app = this.createApplication();
         this.inputHandler = new InputHandler();
         this.levelManager = new LevelManager(this.app);
@@ -21,18 +27,26 @@ class Game {
         this.spacePressed = false;
         this.enemyCountText = this.createEnemyCountText();
         
-        // Show splash screen first
-        this.splashScreen = new SplashScreen(this.app, () => this.initialize());
+        // Create and show splash screen
+        this.splashScreen = new SplashScreen(this.app, () => this.startGame());
+        
+        // Start the game loop
+        this.app.ticker.add(() => this.gameLoop());
     }
-    
+
     createApplication() {
         const app = new PIXI.Application({
             width: GAME_CONFIG.GAME_WIDTH,
             height: GAME_CONFIG.GAME_HEIGHT,
             backgroundColor: GAME_CONFIG.BACKGROUND_COLOR,
+            resolution: window.devicePixelRatio || 1,
+            autoDensity: true,
             antialias: true
         });
+        
+        // Add the canvas to the DOM
         document.body.appendChild(app.view);
+        
         return app;
     }
     
@@ -53,7 +67,7 @@ class Game {
         this.enemyCountText.text = `Enemies: ${this.enemy.getEnemyCount()}/${this.levelManager.getMaxEnemies()}`;
     }
     
-    initialize() {
+    startGame() {
         this.player.addToStage();
         this.setupGameLoop();
     }
@@ -213,7 +227,7 @@ class Game {
         this.enemyCountText = this.createEnemyCountText();
         
         // Show splash screen again
-        this.splashScreen = new SplashScreen(this.app, () => this.initialize());
+        this.splashScreen = new SplashScreen(this.app, () => this.startGame());
     }
 }
 

@@ -1,15 +1,14 @@
-import * as PIXI from 'pixi.js';
 import { GAME_CONFIG } from '../config/gameConfig.js';
 
 export class Score {
     constructor(app) {
         this.app = app;
         this.score = 0;
-        this.scoreText = this.createScoreText();
+        this.container = this.createScoreDisplay();
         this.addToStage();
     }
     
-    createScoreText() {
+    createScoreDisplay() {
         // Create a background container
         const container = new PIXI.Container();
         
@@ -49,13 +48,13 @@ export class Score {
     }
     
     addToStage() {
-        this.app.stage.addChild(this.scoreText);
+        this.app.stage.addChild(this.container);
     }
     
     updateScore(points) {
         this.score += points;
         // Update the text (second child of the container)
-        const scoreText = this.scoreText.children[1];
+        const scoreText = this.container.children[1];
         scoreText.text = `Score: ${this.score}`;
         
         // Ensure anchor point is maintained
