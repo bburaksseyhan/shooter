@@ -160,11 +160,11 @@
       });
     }
   }
-})({"j7Itq":[function(require,module,exports,__globalThis) {
+})({"6Tck0":[function(require,module,exports,__globalThis) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
-var HMR_SERVER_PORT = 1234;
+var HMR_SERVER_PORT = 65043;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "439701173a9199ea";
 var HMR_USE_SSE = false;
@@ -28636,7 +28636,7 @@ var _gameConfigJs = require("../config/gameConfig.js");
 class Player {
     constructor(app){
         this.app = app;
-        this.sprite = this.createPlayer();
+        this.player = this.createPlayer();
         this.x = (0, _gameConfigJs.GAME_CONFIG).GAME_WIDTH / 2;
         this.y = (0, _gameConfigJs.GAME_CONFIG).GAME_HEIGHT - 50;
         this.speed = (0, _gameConfigJs.GAME_CONFIG).PLAYER_SPEED;
@@ -28693,33 +28693,34 @@ class Player {
         return container;
     }
     addToStage() {
-        this.app.stage.addChild(this.sprite);
+        this.app.stage.addChild(this.player);
     }
     removeFromStage() {
-        this.app.stage.removeChild(this.sprite);
+        this.app.stage.removeChild(this.player);
     }
     update(inputHandler) {
         // Move player based on input
         if (inputHandler.isLeftArrowPressed() && this.x > 15) this.x -= this.speed;
         if (inputHandler.isRightArrowPressed() && this.x < (0, _gameConfigJs.GAME_CONFIG).GAME_WIDTH - 15) this.x += this.speed;
         // Update sprite position
-        this.sprite.x = this.x;
-        this.sprite.y = this.y;
+        this.player.x = this.x;
+        this.player.y = this.y;
     }
     shoot() {
         // Check if enough time has passed since the last shot
         const currentTime = Date.now();
         if (currentTime - this.lastShotTime < this.shootCooldown) return null;
+        // Create bullet
         const bullet = new _pixiJs.Graphics();
         bullet.beginFill((0, _gameConfigJs.GAME_CONFIG).BULLET_COLOR);
         bullet.drawCircle(0, 0, (0, _gameConfigJs.GAME_CONFIG).BULLET_RADIUS);
         bullet.endFill();
-        bullet.x = this.x;
-        bullet.y = this.y - 15;
-        // Add a unique ID to the bullet for better tracking
-        bullet.id = `bullet_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-        this.bullets.push(bullet);
+        // Position bullet at player's position
+        bullet.x = this.player.x;
+        bullet.y = this.player.y - 20;
+        // Add bullet to stage and store in array
         this.app.stage.addChild(bullet);
+        this.bullets.push(bullet);
         // Update last shot time
         this.lastShotTime = currentTime;
         return bullet;
@@ -29024,7 +29025,7 @@ class Score {
             fontFamily: (0, _gameConfigJs.GAME_CONFIG).SCORE_FONT,
             fontSize: (0, _gameConfigJs.GAME_CONFIG).SCORE_FONT_SIZE,
             fill: (0, _gameConfigJs.GAME_CONFIG).SCORE_COLOR,
-            align: 'center',
+            align: 'left',
             fontWeight: 'bold',
             dropShadow: true,
             dropShadowColor: 0x000000,
@@ -29032,9 +29033,9 @@ class Score {
             dropShadowDistance: 2
         });
         // Position text within the background
-        text.x = 100; // Center horizontally (half of container width)
-        text.y = 8;
-        text.anchor.set(0.5, 0); // Center horizontally, align to top vertically
+        text.x = 20; // Left padding
+        text.y = 20; // Center vertically
+        text.anchor.set(0, 0.5); // Left align horizontally, center vertically
         // Add both background and text to container
         container.addChild(background);
         container.addChild(text);
@@ -29049,7 +29050,13 @@ class Score {
     updateScore(points) {
         this.score += points;
         // Update the text (second child of the container)
-        this.scoreText.children[1].text = `Score: ${this.score}`;
+        const scoreText = this.scoreText.children[1];
+        scoreText.text = `Score: ${this.score}`;
+        // Ensure anchor point is maintained
+        scoreText.anchor.set(0, 0.5);
+        // Ensure position is maintained
+        scoreText.x = 20;
+        scoreText.y = 20;
     }
     getScore() {
         return this.score;
@@ -29267,6 +29274,6 @@ class SplashScreen {
     }
 }
 
-},{"pixi.js":"8JifE","../config/gameConfig.js":"7G9Tq","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["j7Itq","9VLDe"], "9VLDe", "parcelRequire54e7", {})
+},{"pixi.js":"8JifE","../config/gameConfig.js":"7G9Tq","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["6Tck0","9VLDe"], "9VLDe", "parcelRequire54e7", {})
 
 //# sourceMappingURL=shooter.45a87f56.js.map
