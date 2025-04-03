@@ -1,30 +1,45 @@
 # Space Shooter Game
 
-A simple space shooter game built with PixiJS.
+A 2D space-themed war game built with PixiJS where you control a spaceship and destroy incoming UFOs.
 
-## How to Play
+## Features
 
-- Use the Left and Right arrow keys to move your spaceship
-- Press the Spacebar to shoot
-- Destroy the red enemy squares before they reach the bottom of the screen
-- Each enemy destroyed gives you 10 points
-- Game ends if an enemy reaches the bottom of the screen
+- Smooth space ship controls
+- Dynamic starfield background
+- UFO enemies with random movement patterns
+- Score tracking
+- Collision detection
+- Game over state
 
-## Installation
+## Controls
 
-1. Make sure you have Node.js installed on your system
-2. Clone this repository
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
-4. Start the development server:
-   ```bash
-   npm start
-   ```
-5. Open your browser and navigate to `http://localhost:1234`
+- Left Arrow: Move left
+- Right Arrow: Move right
+- Spacebar: Shoot
+
+## Setup
+
+1. Install dependencies:
+```bash
+npm install
+```
+
+2. Run the development server:
+```bash
+npm run dev
+```
+
+3. Build for production:
+```bash
+npm run build
+```
+
+## Deployment
+
+This game is configured for deployment on Vercel. Simply connect your repository to Vercel and it will automatically deploy your game.
 
 ## Technologies Used
 
-- PixiJS - 2D WebGL renderer
-- Parcel - Web application bundler 
+- PixiJS for 2D rendering
+- Vite for development and building
+- Modern JavaScript (ES6+) 
