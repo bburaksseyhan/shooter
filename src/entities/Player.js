@@ -18,6 +18,9 @@ export class Player {
         this.healthBar = this.createHealthBar();
         this.healthBar.x = this.sprite.x;
         this.healthBar.y = this.sprite.y;
+        
+        // Touch controls for mobile
+        this.touchControls = this.createTouchControls();
     }
 
     drawSpaceship() {
@@ -97,6 +100,54 @@ export class Player {
         this.updateHealthBar(this.healthBar);
         
         return this.health <= 0;
+    }
+
+    createTouchControls() {
+        const controls = new PIXI.Container();
+        
+        // Left button
+        const leftButton = new PIXI.Graphics();
+        leftButton.beginFill(0x00ff00, 0.5);
+        leftButton.drawCircle(0, 0, 30);
+        leftButton.endFill();
+        leftButton.position.set(50, GameConfig.height - 50);
+        leftButton.interactive = true;
+        leftButton.buttonMode = true;
+        
+        // Right button
+        const rightButton = new PIXI.Graphics();
+        rightButton.beginFill(0x00ff00, 0.5);
+        rightButton.drawCircle(0, 0, 30);
+        rightButton.endFill();
+        rightButton.position.set(120, GameConfig.height - 50);
+        rightButton.interactive = true;
+        rightButton.buttonMode = true;
+        
+        // Shoot button
+        const shootButton = new PIXI.Graphics();
+        shootButton.beginFill(0xff0000, 0.5);
+        shootButton.drawCircle(0, 0, 30);
+        shootButton.endFill();
+        shootButton.position.set(GameConfig.width - 50, GameConfig.height - 50);
+        shootButton.interactive = true;
+        shootButton.buttonMode = true;
+        
+        // Add touch events
+        leftButton.on('pointerdown', () => this.keys['ArrowLeft'] = true);
+        leftButton.on('pointerup', () => this.keys['ArrowLeft'] = false);
+        leftButton.on('pointerout', () => this.keys['ArrowLeft'] = false);
+        
+        rightButton.on('pointerdown', () => this.keys['ArrowRight'] = true);
+        rightButton.on('pointerup', () => this.keys['ArrowRight'] = false);
+        rightButton.on('pointerout', () => this.keys['ArrowRight'] = false);
+        
+        shootButton.on('pointerdown', () => this.shoot());
+        
+        controls.addChild(leftButton);
+        controls.addChild(rightButton);
+        controls.addChild(shootButton);
+        
+        return controls;
     }
 
     update() {
